@@ -16,9 +16,9 @@ Parser::Parser() {
  *
  * @return edge list in vector form
  */
-vector<Parser::EdgeInfo> Parser::readFile(string fname) {
+vector<Edge> Parser::readFile(string fname) {
     /* Initialization */
-    vector<EdgeInfo> out;
+    vector<Edge> out;
     std::ifstream infile(fname);
 
     /* Parse .csv file line by line */
@@ -34,8 +34,8 @@ vector<Parser::EdgeInfo> Parser::readFile(string fname) {
         if (edge.size() < 3) continue;  // If it's missing an entry we skip it
 
         /* Add information to out vector */
-        EdgeInfo newInfo(stoi(edge[0]), stoi(edge[1]), stoi(edge[2]));
-        out.push_back(newInfo);
+        Edge newEdge(stoi(edge[0]), stoi(edge[1]), stoi(edge[2]));
+        out.push_back(newEdge);
     }
 
     return out;
@@ -49,11 +49,15 @@ vector<Parser::EdgeInfo> Parser::readFile(string fname) {
  * @return generated graph
  */
 Graph* Parser::generateGraph(string fname) {
-    vector<EdgeInfo> edgeList = readFile(fname);
+    /* Extract info from file */
+    vector<Edge> edgeList = readFile(fname);
+    Graph* g = new Graph();
 
-    for (auto e : edgeList) {
-        std::cout << "Edge: " << e.source << " " << e.dest << " " << e.weight << std::endl;
+    /* Add edges to the graph */
+    for (Edge e : edgeList) {
+        g->addEdge(e.source, e.dest, e.weight);
     }
 
-    return NULL;
+    /* Return finished product */
+    return g;
 }
