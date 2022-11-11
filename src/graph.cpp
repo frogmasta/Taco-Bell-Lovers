@@ -7,7 +7,7 @@ using std::endl;
 using std::pair;
 using std::vector;
 
-Graph::Graph() { }
+Graph::Graph() = default;
 
 /** 
  * Checks whether a given vertex exists in the graph
@@ -100,7 +100,7 @@ bool Graph::addEdge(int src, int dest, int weight) {
 /*
  * Prints a simple representation of the current graph
  */
-void Graph::printGraph() {
+void Graph::printGraph() const {
     cout << "Graph- " << endl;
 
     vector<int> vertices = getVertices();

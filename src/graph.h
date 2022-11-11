@@ -23,7 +23,7 @@ class Graph {
         bool addVertex(int v);
         bool addEdge(int src, int dest, int weight);
 
-        void printGraph();
+        void printGraph() const;
     private:
         std::unordered_map<int, std::vector<Edge>> adjList;
 };

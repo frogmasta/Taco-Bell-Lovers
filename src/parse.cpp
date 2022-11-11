@@ -5,9 +5,7 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-Parser::Parser() {
-    /* do nothing */
-}
+Parser::Parser() = default;
 
 /**
  * Generates list of edges from a given .csv file [source, dest, weight, time=optional]
@@ -16,7 +14,7 @@ Parser::Parser() {
  *
  * @return edge list in vector form
  */
-vector<Edge> Parser::readFile(string fname) {
+vector<Edge> Parser::readFile(const string& fname) {
     /* Initialization */
     vector<Edge> out;
     std::ifstream infile(fname);
@@ -48,7 +46,7 @@ vector<Edge> Parser::readFile(string fname) {
  * 
  * @return generated graph
  */
-Graph* Parser::generateGraph(string fname) {
+Graph* Parser::generateGraph(const string &fname) {
     /* Extract info from file */
     vector<Edge> edgeList = readFile(fname);
     Graph* g = new Graph();

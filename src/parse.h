@@ -14,7 +14,7 @@ class Parser {
     public:
         Parser();
 
-        std::vector<Edge> readFile(std::string fname);
-        Graph* generateGraph(std::string fname);
+        static std::vector<Edge> readFile(const std::string& fname);
+        static Graph* generateGraph(const std::string &fname);
     private:
 };
