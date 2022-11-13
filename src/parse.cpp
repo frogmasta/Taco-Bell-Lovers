@@ -5,6 +5,8 @@ using std::string;
 using std::to_string;
 using std::vector;
 
+const int ELEMENTS_PER_LINE = 3;
+
 Parser::Parser() = default;
 
 /**
@@ -29,7 +31,7 @@ vector<Edge> Parser::readFile(const string& fname) {
             else edge.back() += c;
         }
 
-        if (edge.size() < 3) continue;  // If it's missing an entry we skip it
+        if (edge.size() < ELEMENTS_PER_LINE) continue;  // If it's missing an entry we skip it
 
         /* Add information to out vector */
         Edge newEdge(stoi(edge[0]), stoi(edge[1]), stoi(edge[2]));
