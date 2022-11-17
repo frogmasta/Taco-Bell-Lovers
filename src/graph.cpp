@@ -113,3 +113,32 @@ void Graph::printGraph() const {
         cout << endl;
     }
 }
+
+/**
+ * Updates an already existing edge in the graph
+ *
+ */
+void Graph::setEdge(int src, int dest, int weight) {
+  if(edgeExists(src, dest)) {
+    vector<Edge>& edges = adjList.at(src);
+
+    for (Edge& edge : edges) {
+      if (edge.dest == dest) {
+        edge.weight = weight;
+        break;
+      }
+    }
+  }
+}
+
+// Only call if edge exists
+Edge Graph::getEdge(int src, int dest) const {
+  vector<Edge> edges = adjList.at(src);
+  for (Edge edge : edges) {
+    if (edge.dest == dest) {
+      return edge;
+    }
+  }
+  return {};
+}
+

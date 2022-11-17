@@ -12,9 +12,9 @@
  */
 int main() {
     /* Tester to check parsing */
-    std::string fname = "../data/soc-sign-bitcoinotc.csv";
+    std::string fname = "../data/test1.csv";
     Parser* p = new Parser();
-    Graph* g = p->generateGraph(fname);
+    Graph* g = Parser::generateGraph(fname, true);
     g->printGraph();
 
     delete p;

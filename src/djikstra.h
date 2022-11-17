@@ -8,5 +8,5 @@ class Djikstra {
   explicit Djikstra(Graph* graph) : _graph(graph) {};
   std::vector<Edge> findPath(int v1, int v2);
  private:
-  Graph* _graph;
+  [[maybe_unused]] Graph* _graph;
 };

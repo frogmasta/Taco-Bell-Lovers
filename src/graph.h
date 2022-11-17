@@ -13,12 +13,14 @@
 class Graph {
     public:
         Graph();
+        void setEdge(int src, int dest, int weight);
 
         bool vertexExists(int v) const;
         bool edgeExists(int src, int dest) const;
 
         std::vector<int> getVertices() const;
         std::vector<Edge> getEdges(int v) const;
+        Edge getEdge(int src, int dest) const;
 
         bool addVertex(int v);
         bool addEdge(int src, int dest, int weight);

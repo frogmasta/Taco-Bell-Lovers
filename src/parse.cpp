@@ -46,14 +46,28 @@ vector<Edge> Parser::readFile(const string& fname) {
  * 
  * @return generated graph
  */
-Graph* Parser::generateGraph(const string &fname) {
+Graph* Parser::generateGraph(const string &fname, bool edge_aggregation) {
     /* Extract info from file */
     vector<Edge> edgeList = readFile(fname);
     Graph* g = new Graph();
 
+
     /* Add edges to the graph */
-    for (Edge e : edgeList) {
+    if (edge_aggregation) {
+
+      for (const Edge& edge : edgeList) {
+        if (g->edgeExists(edge.source, edge.dest)) {
+          int prevWeight = g->getEdge(edge.source, edge.dest).weight;
+          g->setEdge(edge.source, edge.dest, (prevWeight + edge.weight) / 2);
+        } else {
+          g->addEdge(edge.source, edge.dest, edge.weight);
+        }
+      }
+
+    } else {
+      for (const Edge& e : edgeList) {
         g->addEdge(e.source, e.dest, e.weight);
+      }
     }
 
     /* Return finished product */
