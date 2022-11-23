@@ -15,6 +15,6 @@ class Parser {
         Parser();
 
         static std::vector<Edge> readFile(const std::string& fname);
-        static Graph* generateGraph(const std::string &fname, bool edge_aggregation=false);
+        static Graph* generateGraph(const std::string &fname, bool edge_aggregation);
     private:
 };
