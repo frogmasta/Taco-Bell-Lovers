@@ -122,7 +122,8 @@ bool Graph::addEdge(int src, int dest, double weight, bool edge_aggregation) {
 
         /* Change edge if edge_aggregation is on */
         if (edge_aggregation) {
-            e.weight = (weight + e.weight) / 2;
+            e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
+            e.aggregation_count += 1;
             return true;
         } else {
             return false;

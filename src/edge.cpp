@@ -9,6 +9,7 @@ Edge::Edge(int s, int d, int w) {
     source = s;
     dest = d;
     weight = w;
+    aggregation_count = 1;
 }
 
 /**
