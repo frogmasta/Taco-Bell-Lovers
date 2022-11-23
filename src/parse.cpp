@@ -13,7 +13,7 @@ Parser::Parser() = default;
  * @param num input string
  * @return true if the input is a string, false otherwise
  */
-bool isInteger(const string& num) {
+bool Parser::isInteger(const string& num) {
     /* A blank number is not an integer */
     if (num.length() < 1) return false;
 
