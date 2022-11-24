@@ -18,4 +18,5 @@ class Parser {
     private:
         static std::vector<Edge> readFile(const std::string& fname);
         static bool isInteger(const std::string& num);
+        static void trim(std::string& str);
 };

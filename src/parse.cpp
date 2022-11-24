@@ -8,6 +8,21 @@ using std::vector;
 Parser::Parser() = default;
 
 /**
+ * Helper function to trim whitespace from the beginning/end of a string.
+ *
+ * @param str string to remove whitespace
+ */
+void Parser::trim(string& str) {
+    /* Trim the left side */
+    size_t newstart = str.find_first_not_of(" \n\r\t\f\v");
+    str = str.substr(newstart);
+
+    /* Trim the right side */
+    size_t newend = str.find_last_not_of(" \n\r\t\f\v");
+    str = str.substr(0, newend+1);
+}
+
+/**
  * Helper function to determine if a string is an integer or not
  *
  * @param num input string
@@ -43,13 +58,19 @@ vector<Edge> Parser::readFile(const string& fname) {
     vector<Edge> out;
     std::ifstream infile(fname);
 
+    /* Check if the file was opened correctly */
+    if (!infile.is_open()) return vector<Edge>();
+
     /* Parse .csv file line by line */
     string line;
     while(std::getline(infile, line)) {
         /* Extract info into edge vector [source, dest, weight, time=optional] */
         vector<string> edge = { "" };
         for (const char& c : line) {
-            if (c == ',') edge.push_back("");
+            if (c == ',') {
+                trim(edge.back());
+                edge.push_back("");
+            }
             else edge.back() += c;
         }
 
@@ -65,6 +86,7 @@ vector<Edge> Parser::readFile(const string& fname) {
         out.push_back(newEdge);
     }
 
+    /* Return parsed edges */
     return out;
 }
 
@@ -77,9 +99,12 @@ vector<Edge> Parser::readFile(const string& fname) {
 Graph* Parser::generateGraph(const string &fname, bool edge_aggregation=false) {
     /* Extract info from file */
     vector<Edge> edgeList = readFile(fname);
-    Graph* g = new Graph();
+
+    /* Empty graph and/or file read error */
+    if (edgeList.size() < 1) return NULL;
 
 	/* Add edges to the graph */
+    Graph* g = new Graph();
     for (const Edge& e : edgeList) {
     	g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
     }
