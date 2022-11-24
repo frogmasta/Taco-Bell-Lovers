@@ -5,8 +5,6 @@ using std::string;
 using std::to_string;
 using std::vector;
 
-const int ELEMENTS_PER_LINE = 3;
-
 Parser::Parser() = default;
 
 /**
