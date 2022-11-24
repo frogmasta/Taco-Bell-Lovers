@@ -7,7 +7,9 @@ class Edge {
     public:
         int source;
         int dest;
-        int weight;
+        double weight;
+
+        int aggregation_count;
 
         Edge();
         Edge(int s, int d, int w);

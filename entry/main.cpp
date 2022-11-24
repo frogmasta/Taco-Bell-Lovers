@@ -6,19 +6,36 @@
 #include "edge.h"
 
 /**
- * Driver file for the final project.
- * 
- * @todo command-line arguments for which .csv file to parse
+ * Driver file for the final project. Takes a command line input to which file to analyze. Defaults to bitcoin dataset.
  */
-int main() {
-    /* Tester to check parsing */
-    std::string fname = "../data/soc-sign-bitcoinotc.csv";
-    Parser* p = new Parser();
-    Graph* g = p->generateGraph(fname);
+int main(int argc, char **argv) {
+    /* Pass in optional dataset arguement */
+    std::string dataset = "soc-sign-bitcoinotc.csv";
+    if (argc > 1) dataset = argv[1];
+
+    /* Generate graph from input file */
+    std::string fname = "../data/" + dataset;
+    std::cout << "The input file is: " << fname << std::endl;
+    Graph* g = Parser::generateGraph(fname, true);
+
+    /* An error has occured */
+    if (g == NULL) {
+        std::cout << "An error has occured when reading the input file you've specified. ";
+        std::cout << "Either the .csv file was unable to be opened, or you provided an empty graph." << std::endl;
+        return 0;
+    }
+
+    /* Print a simple representation of the graph */
     g->printGraph();
 
-    delete p;
-    delete g;
+    /* BFS traversal of the graph starting at index 1 */
+    std::cout << "BFS Traversal: ";
+    for (const int& v : g->bfs(1)) {
+        std::cout << v << " ";
+    }
+    std::cout << std::endl;
 
+    /* Clean-up and return */
+    delete g;
     return 0;
 }
