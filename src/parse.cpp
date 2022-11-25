@@ -55,7 +55,7 @@ vector<Edge> Parser::readFile(const string& fname) {
     std::ifstream infile(fname);
 
     // Possible error has occured 
-    if (!infile.is_open()) return vector<Edge>();
+    if (!infile.is_open()) return {};
 
     string line;
     while(std::getline(infile, line)) {

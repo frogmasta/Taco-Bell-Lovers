@@ -1,9 +1,5 @@
 #include "edge.h"
 
-/* do nothing */
-Edge::Edge() = default;
-
-
 Edge::Edge(int s, int d, int w) {
     source = s;
     dest = d;

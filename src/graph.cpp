@@ -71,7 +71,7 @@ vector<Edge> Graph::getEdges(int v) const {
  * @param dest desination vertex
  */
 Edge Graph::getEdge(int src, int dest) const {
-    if (!vertexExists(src) || !vertexExists(dest)) return Edge();
+    if (!vertexExists(src) || !vertexExists(dest)) return {};
 
     vector<Edge> edges = adjList.at(src);
     for (const Edge& edge : edges) {
