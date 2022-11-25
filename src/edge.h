@@ -1,7 +1,7 @@
 #pragma once
 
 /*
- * Simple edge class to help graph structure
+ * Simple edge class
  */
 class Edge {
     public:

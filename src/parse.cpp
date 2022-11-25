@@ -13,11 +13,9 @@ Parser::Parser() = default;
  * @param str string to remove whitespace
  */
 void Parser::trim(string& str) {
-    /* Trim the left side */
     size_t newstart = str.find_first_not_of(" \n\r\t\f\v");
     str = str.substr(newstart);
 
-    /* Trim the right side */
     size_t newend = str.find_last_not_of(" \n\r\t\f\v");
     str = str.substr(0, newend+1);
 }
@@ -29,17 +27,16 @@ void Parser::trim(string& str) {
  * @return true if the input is a string, false otherwise
  */
 bool Parser::isInteger(const string& num) {
-    /* A blank number is not an integer */
+    // An empty string is not an integer
     if (num.length() < 1) return false;
 
-    /* Remove leading negative sign */
+    // Handles possible negative sign
     size_t startidx = 0;
     if (num[0] == '-') {
         startidx = 1;
         if (num.length() < 2) return false;
     }
 
-    /* Check to make sure everything is a digit */
     for (size_t i = startidx; i < num.length(); ++i) {
         if (!isdigit(num[i])) return false;
     }
@@ -54,17 +51,14 @@ bool Parser::isInteger(const string& num) {
  * @return edge-list in vector form
  */
 vector<Edge> Parser::readFile(const string& fname) {
-    /* Initialization */
     vector<Edge> out;
     std::ifstream infile(fname);
 
-    /* Check if the file was opened correctly */
+    // Possible error has occured 
     if (!infile.is_open()) return vector<Edge>();
 
-    /* Parse .csv file line by line */
     string line;
     while(std::getline(infile, line)) {
-        /* Extract info into edge vector [source, dest, weight, time=optional] */
         vector<string> edge = { "" };
         for (const char& c : line) {
             if (c == ',') {
@@ -74,19 +68,17 @@ vector<Edge> Parser::readFile(const string& fname) {
             else edge.back() += c;
         }
 
-        /* Throw out invalid values */
+        // Invalid values
         if (edge.size() < 3 || !isInteger(edge[0]) || !isInteger(edge[1]) || !isInteger(edge[2])) continue;
 
-        /* Check that the weight is a valid integer between -10 and 10 */
+        // Weight must be in [-10, 10] 
         int w = stoi(edge[2]);
         if (w < -10 || w > 10) continue;
 
-        /* Add information to out vector */
         Edge newEdge(stoi(edge[0]), stoi(edge[1]), stoi(edge[2]));
         out.push_back(newEdge);
     }
 
-    /* Return parsed edges */
     return out;
 }
 
@@ -97,18 +89,15 @@ vector<Edge> Parser::readFile(const string& fname) {
  * @return generated graph
  */
 Graph* Parser::generateGraph(const string &fname, bool edge_aggregation=false) {
-    /* Extract info from file */
     vector<Edge> edgeList = readFile(fname);
 
-    /* Empty graph and/or file read error */
+    // Possible error 
     if (edgeList.size() < 1) return NULL;
 
-	/* Add edges to the graph */
     Graph* g = new Graph();
     for (const Edge& e : edgeList) {
     	g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
     }
 
-    /* Return finished product */
     return g;
 }

@@ -10,7 +10,7 @@
 #include "edge.h"
 
 /* 
- * Class implementation of a weighted, signed, directed Graph
+ * Class implementation of a weighted, signed, directed Graph.
  */
 class Graph {
     public:

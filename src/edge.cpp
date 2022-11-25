@@ -1,10 +1,9 @@
 #include "edge.h"
 
-Edge::Edge() { /* do nothing */}
+/* do nothing */
+Edge::Edge() = default;
 
-/*
- * Paramaterized constructor for edge
- */
+
 Edge::Edge(int s, int d, int w) {
     source = s;
     dest = d;
@@ -13,7 +12,7 @@ Edge::Edge(int s, int d, int w) {
 }
 
 /**
- * Checks for source/destination equality. DOES NOT check for weight equality!
+ * Checks for source/destination equality. **DOES NOT** check for weight equality!
  *
  * @param edge to compare against
  * @return true if equal, false otherwise
