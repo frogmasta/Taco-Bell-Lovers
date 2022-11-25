@@ -29,7 +29,5 @@ bool Edge::operator==(const Edge& other) const {
  * @return true if equal, false otherwise
  */
 bool Edge::strong_equality(const Edge& other) const {
-    std::cout << other.source << " " <<  other.dest << " " << other.weight << std::endl;
-    std::cout << source << " " << dest << " " << weight << std::endl;
     return (source == other.source && dest == other.dest && weight == other.weight);
 }
