@@ -1,11 +1,6 @@
 #include "graph.h"
 
-using std::cout;
-using std::endl;
-using std::pair;
-using std::vector;
-
-Graph::Graph() = default;
+using namespace std;
 
 /** 
  * Checks whether a given vertex exists in the graph.
@@ -113,9 +108,10 @@ bool Graph::addEdge(int src, int dest, double weight, bool edge_aggregation) {
 
       // Crucial for duplicate edges with different weights (when edge_aggregation is on)
       if (edge_aggregation) {
-          e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
-          e.aggregation_count += 1;
-          return true;
+        edge_aggregated = true;
+        e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
+        e.aggregation_count += 1;
+        return true;
       }
       else return false;
   }
