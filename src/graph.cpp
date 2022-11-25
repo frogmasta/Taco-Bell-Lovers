@@ -77,6 +77,23 @@ Edge Graph::getEdge(int src, int dest) const {
 }
 
 /**
+ * Gets the neighbors of a node from the graph.
+ *
+ * @param v vertex to grab neighbors from
+ * @return vector containing vertex numbers of neighbors
+ */
+std::vector<int> Graph::getNeighbors(int v) const {
+  std::vector<Edge> outgoingEdges = getEdges(v);
+  std::vector<int> neighbors;
+  for (const Edge& edge : outgoingEdges) {
+    neighbors.push_back(edge.dest);
+  }
+
+  return neighbors;
+}
+
+
+/**
  * Adds a new vertex to the graph
  *
  * @param v new vertex
@@ -98,6 +115,7 @@ bool Graph::addVertex(int v) {
  * @return true if successful, false otherwise
  */
 bool Graph::addEdge(int src, int dest, double weight, bool edge_aggregation) {
+  edge_aggregated = edge_aggregation;
 
   if (!vertexExists(src)) addVertex(src);
   if (!vertexExists(dest)) addVertex(dest);
@@ -108,7 +126,6 @@ bool Graph::addEdge(int src, int dest, double weight, bool edge_aggregation) {
 
       // Crucial for duplicate edges with different weights (when edge_aggregation is on)
       if (edge_aggregation) {
-        edge_aggregated = true;
         e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
         e.aggregation_count += 1;
         return true;

@@ -21,7 +21,9 @@ class Graph {
 
         std::vector<int> getVertices() const;
         std::vector<Edge> getEdges(int v) const;
+        std::vector<int> getNeighbors(int v) const;
         Edge getEdge(int src, int dest) const;
+        std::unordered_map<int, std::vector<Edge>> getAdjList() const {return adjList;};
 
         bool isEdgeAggregated () const {return edge_aggregated;};
 
