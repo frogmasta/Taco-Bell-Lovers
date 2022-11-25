@@ -2,11 +2,13 @@
 
 #include "graph.h"
 #include "edge.h"
+#include <map>
+#include <utility>
 
 class Djikstra {
  public:
-  explicit Djikstra(Graph* graph) : _graph(graph) {};
+  explicit Djikstra(Graph* graph);
   std::vector<Edge> findPath(int v1, int v2);
  private:
-  [[maybe_unused]] Graph* _graph;
+  Graph* _graph;
 };

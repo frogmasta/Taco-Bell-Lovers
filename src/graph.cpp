@@ -61,7 +61,7 @@ vector<Edge> Graph::getEdges(int v) const {
         return adjList.at(v);
     }
 
-    return vector<Edge>();
+    return {};
 }
 
 /**
@@ -78,7 +78,7 @@ Edge Graph::getEdge(int src, int dest) const {
         if (edge.dest == dest) return edge;
     }
 
-    return Edge();
+    return {};
 }
 
 /**
@@ -103,24 +103,25 @@ bool Graph::addVertex(int v) {
  * @return true if successful, false otherwise
  */
 bool Graph::addEdge(int src, int dest, double weight, bool edge_aggregation) {
-    if (!vertexExists(src)) addVertex(src);
-    if (!vertexExists(dest)) addVertex(dest);
 
-    vector<Edge>& edges = adjList.at(src);
-    for (Edge& e : edges) {
-        if (e.dest != dest) continue;
+  if (!vertexExists(src)) addVertex(src);
+  if (!vertexExists(dest)) addVertex(dest);
 
-        // Crucial for duplicate edges with different weights (when edge_aggregation is on)
-        if (edge_aggregation) {
-            e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
-            e.aggregation_count += 1;
-            return true;
-        } 
-        else return false;
-    }
+  vector<Edge>& edges = adjList.at(src);
+  for (Edge& e : edges) {
+      if (e.dest != dest) continue;
 
-    adjList[src].push_back(Edge(src, dest, weight));
-    return true;
+      // Crucial for duplicate edges with different weights (when edge_aggregation is on)
+      if (edge_aggregation) {
+          e.weight = (weight + e.aggregation_count * e.weight) / (e.aggregation_count + 1);
+          e.aggregation_count += 1;
+          return true;
+      }
+      else return false;
+  }
+
+  adjList[src].push_back(Edge(src, dest, weight));
+  return true;
 }
 
 /*
