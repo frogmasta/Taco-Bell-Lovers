@@ -12,7 +12,9 @@ class Edge {
         int aggregation_count;
 
         Edge();
-        Edge(int s, int d, int w);
+        Edge(int s, int d, double w);
 
-        bool operator==(Edge& other) const;
+        bool strong_equality(const Edge& other) const;
+
+        bool operator==(const Edge& other) const;
 };
