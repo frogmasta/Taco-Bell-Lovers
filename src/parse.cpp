@@ -96,7 +96,7 @@ Graph* Parser::generateGraph(const std::string &fname, bool edge_aggregation) {
 
     Graph* g = new Graph();
     for (const Edge& e : edgeList) {
-      g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
+        g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
     }
 
     return g;
