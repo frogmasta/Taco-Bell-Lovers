@@ -21,6 +21,7 @@ class Djikstra {
   int maxiTrust(const std::vector<int>& vset) const;
   static std::vector<int> neighborsInVset(int v, const std::vector<int> &vset, const Graph& graph) ;
   Graph reconstructGraph(int v) const;
+  void traceBackPath() const;
 
   // key = vertex number : value = distance
   std::unordered_map<int, double> dist;

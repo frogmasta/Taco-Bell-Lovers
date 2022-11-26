@@ -16,7 +16,7 @@ Djikstra::Djikstra(Graph *graph) {
  * @return vector of ints in ascending order of visited nodes from source
  */
 void Djikstra::findPath(int src, int dest) {
-  Graph reconstructed = reconstructGraph(src);
+  Graph reconstructed = reconstructGraph(src); // Ensures we are working with a fully connected graph
 
   if (!reconstructed.vertexExists(src) || !reconstructed.vertexExists(dest)) throw invalid_argument("Either source or destination vertexes don't exist in the graph.");
 
@@ -54,10 +54,11 @@ void Djikstra::findPath(int src, int dest) {
     }
   }
 
+  // Now we need to trace back prev to construct the nodes involved in the path
   currPathLength = dist[dest];
   stack<int> endToSrc;
-
   int add = dest;
+
   while (add != src) {
     endToSrc.push(add);
     add = prev[add];
@@ -73,6 +74,9 @@ void Djikstra::findPath(int src, int dest) {
   currPath = path;
 }
 
+/**
+ * Prints out the nodes in the strongest trust path
+ */
 void Djikstra::printCurrPath() const {
   cout << "Djikstra's path from vertex " << currPath.at(0) << " to vertex " << currPath.at(currPath.size()-1) << "." << endl;
   for (unsigned long i = 0; i < currPath.size(); i++) {
@@ -121,6 +125,12 @@ std::vector<int> Djikstra::neighborsInVset(int v, const vector<int> &vset, const
   return ret;
 }
 
+/**
+ * Private helper function to reconstruct a graph starting from the source using BFS so it is fully connected.
+ *
+ * @param v vertex to begin BFS search from
+ * @return Reconstructed graph that is now fully connected
+ */
 Graph Djikstra::reconstructGraph(int v) const {
   Graph ret{};
   set<int> visited;
