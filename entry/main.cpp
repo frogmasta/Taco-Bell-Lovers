@@ -10,7 +10,7 @@
  * Driver file for the final project. Takes a command line input to which file to analyze. Defaults to bitcoin dataset.
  */
 int main(int argc, char **argv) {
-    std::string dataset = "test2.csv";
+    std::string dataset = "soc-sign-bitcoinotc.csv";
     if (argc > 1) dataset = argv[1];
 
     std::string fname = "../data/" + dataset;
@@ -23,18 +23,15 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    g->printGraph();
+    // g->printGraph();
 
     Djikstra djikstra(g);
-    std::vector<int> path = djikstra.findPath(1, 4);
-    std::cout << djikstra.getPathDist() << std::endl;
-
-//
-//    std::cout << "BFS Traversal: ";
-//    for (const int& v : g->bfs(1)) {
-//        std::cout << v << " ";
-//    }
-//    std::cout << std::endl;
+    djikstra.findPath(1, 5098);
+    std::vector<int> path = djikstra.getCurrPath();
+    std::cout << std::endl;
+    std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
+    std::cout << std::endl;
+    djikstra.printCurrPath();
 
     delete g;
     return 0;
