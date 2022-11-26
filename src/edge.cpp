@@ -1,5 +1,9 @@
 #include "edge.h"
 
+/* do nothing, but DON'T DELETE */
+Edge::Edge() = default;
+
+/* Paramaterized constructor */
 Edge::Edge(int s, int d, int w) {
     source = s;
     dest = d;
