@@ -5,14 +5,13 @@
  */
 class Edge {
     public:
-        int source = -1;
-        int dest = -1;
-        double weight = 0;
+        int source;
+        int dest;
+        double weight;
 
-        int aggregation_count = 0;
+        int aggregation_count;
 
-        Edge() = default;
-        Edge(int s, int d, int w);
+        explicit Edge(int s, int d, int w);
 
         bool operator==(Edge& other) const;
 };
