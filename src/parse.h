@@ -14,7 +14,7 @@ class Parser {
     public:
         Parser();
 
-        static Graph* generateGraph(const std::string &fname, bool edge_aggregation);
+        static Graph* generateGraph(const std::string &fname, bool edge_aggregation = false);
     private:
         static std::vector<Edge> readFile(const std::string& fname);
         static bool isInteger(const std::string& num);

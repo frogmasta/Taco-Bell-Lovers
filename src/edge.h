@@ -11,8 +11,7 @@ class Edge {
 
         int aggregation_count;
 
-        Edge();
-        Edge(int s, int d, int w);
+        explicit Edge(int s, int d, int w);
 
         bool operator==(Edge& other) const;
 };

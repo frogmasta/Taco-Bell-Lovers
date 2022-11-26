@@ -55,7 +55,7 @@ vector<Edge> Parser::readFile(const string& fname) {
     std::ifstream infile(fname);
 
     // Possible error has occured 
-    if (!infile.is_open()) return vector<Edge>();
+    if (!infile.is_open()) return {};
 
     string line;
     while(std::getline(infile, line)) {
@@ -88,15 +88,15 @@ vector<Edge> Parser::readFile(const string& fname) {
  * @param file where graph is stored
  * @return generated graph
  */
-Graph* Parser::generateGraph(const string &fname, bool edge_aggregation=false) {
+Graph* Parser::generateGraph(const std::string &fname, bool edge_aggregation) {
     vector<Edge> edgeList = readFile(fname);
 
     // Possible error 
-    if (edgeList.size() < 1) return NULL;
+    if (edgeList.empty()) return nullptr;
 
     Graph* g = new Graph();
     for (const Edge& e : edgeList) {
-    	g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
+      g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
     }
 
     return g;
