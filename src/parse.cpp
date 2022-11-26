@@ -94,7 +94,7 @@ Graph* Parser::generateGraph(const std::string &fname, bool edge_aggregation) {
     // Possible error 
     if (edgeList.empty()) return nullptr;
 
-    auto* g = new Graph();
+    Graph* g = new Graph();
     for (const Edge& e : edgeList) {
       g->addEdge(e.source, e.dest, e.weight, edge_aggregation);
     }

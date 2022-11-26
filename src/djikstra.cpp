@@ -3,7 +3,6 @@
 using namespace std;
 
 Djikstra::Djikstra(Graph *graph) {
-  if (!graph->isEdgeAggregated()) throw invalid_argument("Cannot give non edge aggregated graph to Djikstra's algorithm.");
   _graph = graph;
   adjList = _graph->getAdjList();
 }
