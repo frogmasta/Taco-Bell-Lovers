@@ -71,7 +71,7 @@ void Djikstra::findPath(int src, int dest) {
     endToSrc.pop();
   }
 
-  currPathLength = -1 * (dist[dest] - MAX_RATING * (double) path.size());
+  currPathLength = -1 * (dist[dest] - MAX_RATING * ((double) path.size()-1));
 
   currPath = path;
 }
@@ -93,8 +93,8 @@ void Djikstra::printCurrPath() const {
  * @return vertex number
  */
 int Djikstra::miniTrust(const vector<int> &vset) const {
-  double min_trust = vset.at(0); // should not through an error since vset is supposed to not be empty when this is called
-  int ret;
+  double min_trust = dist.at(vset.at(0));
+  int ret = vset.at(0); // should not through an error since vset is supposed to not be empty when this is called
 
   for (int v : vset) {
     if (dist.at(v) < min_trust) {
@@ -165,7 +165,3 @@ Graph Djikstra::reconstructGraph(int v) const {
 
   return ret;
 }
-
-
-
-
