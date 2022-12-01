@@ -23,15 +23,30 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    // g->printGraph();
+    g->printGraph();
 
+    // strongly connected components
+    std::vector<std::vector<int>> scc = g->StronglyConnectedComponents();
+    for (const std::vector<int>& component : scc) {
+        std::cout << "Component: ";
+        for (const int& node : component) {
+            std::cout << node << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    // djikstra
     Djikstra djikstra(g);
-    djikstra.findPath(1, 5098);
-    std::vector<int> path = djikstra.getCurrPath();
-    std::cout << std::endl;
-    std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
-    std::cout << std::endl;
-    djikstra.printCurrPath();
+    try {
+        djikstra.findPath(1, 5098);
+        std::vector<int> path = djikstra.getCurrPath();
+        std::cout << std::endl;
+        std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
+        std::cout << std::endl;
+        djikstra.printCurrPath();
+    } catch(const std::invalid_argument& ia) {
+        std::cout << "Path listed doesn't exist in the graph." << std::endl;
+    }
 
     delete g;
     return 0;
