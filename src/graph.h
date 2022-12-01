@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <iostream>
 #include <queue>
+#include <stack>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -32,9 +33,14 @@ class Graph {
 
         std::vector<int> bfs(int v) const;
 
+        std::vector<std::vector<int>> StronglyConnectedComponents() const;
+
         void printGraph() const;
     private:
         void bfs_helper(int v, std::vector<int>& traversal, std::unordered_map<int, bool>& labeling) const;
+
+        Graph* transpose() const;
+        std::vector<int> scc_dfs(int currVertex, std::unordered_map<int, bool>& visited, std::stack<int>& scc_stack) const;
 
         std::unordered_map<int, std::vector<Edge>> adjList;
         bool edge_aggregated {false};

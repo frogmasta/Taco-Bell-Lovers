@@ -2,6 +2,8 @@
 
 using namespace std;
 
+const double MAX_RATING = 10;
+
 Djikstra::Djikstra(Graph *graph) {
   _graph = graph;
   adjList = _graph->getAdjList();
@@ -28,14 +30,14 @@ void Djikstra::findPath(int src, int dest) {
 
   // set all nodes as not visited and distances as infinity
   for (const auto& pair : reconstructed.getAdjList()) {
-    dist[pair.first] = -1.0; // -1 is infinite distance
+    dist[pair.first] = numeric_limits<double>::max(); // -infinite distance
     vset.push_back(pair.first);
   }
   dist[src] = 0; // initialize source as zero
 
   size_t vsetSize = vset.size();
   while (!vset.empty()) {
-    int curr = maxiTrust(vset);
+    int curr = miniTrust(vset);
     vset.erase(remove(vset.begin(), vset.end(), curr), vset.end());
     if (vset.size() == vsetSize) {
       cout << "Could not find a possible path to the end vertex" << endl;
@@ -46,7 +48,7 @@ void Djikstra::findPath(int src, int dest) {
     vector<int> neighbors = neighborsInVset(curr, vset, reconstructed);
     for (int neighbor : neighbors) {
       double altDist = dist[curr] + reconstructed.getEdge(curr, neighbor).weight;
-      if (altDist > dist[neighbor]) {
+      if (altDist < dist[neighbor]) {
         dist[neighbor] = altDist;
         prev[neighbor] = curr;
       }
@@ -54,7 +56,6 @@ void Djikstra::findPath(int src, int dest) {
   }
 
   // Now we need to trace back prev to construct the nodes involved in the path
-  currPathLength = dist[dest];
   stack<int> endToSrc;
   int add = dest;
 
@@ -70,6 +71,8 @@ void Djikstra::findPath(int src, int dest) {
     endToSrc.pop();
   }
 
+  currPathLength = -1 * (dist[dest] - MAX_RATING * (double) path.size());
+
   currPath = path;
 }
 
@@ -84,19 +87,19 @@ void Djikstra::printCurrPath() const {
 }
 
 /**
- * Returns the vertex number of the maximum trust distance vertex in a given vertex set
+ * Returns the vertex number of the minimum (in reality the maximum) trust distance vertex in a given vertex set
  *
  * @param vset vertex vector to be examined
  * @return vertex number
  */
-int Djikstra::maxiTrust(const vector<int> &vset) const {
-  double max_trust = 0;
+int Djikstra::miniTrust(const vector<int> &vset) const {
+  double min_trust = vset.at(0); // should not through an error since vset is supposed to not be empty when this is called
   int ret;
 
   for (int v : vset) {
-    if (dist.at(v) >= max_trust) {
+    if (dist.at(v) < min_trust) {
       ret = v;
-      max_trust = dist.at(v);
+      min_trust = dist.at(v);
     }
   }
 
@@ -147,7 +150,7 @@ Graph Djikstra::reconstructGraph(int v) const {
     for (const Edge& e : _graph->getEdges(currVertex)) {
       // add outgoing edge if we can
       if (e.weight > 0) {
-        ret.addEdge(e.source, e.dest, e.weight, false);
+        ret.addEdge(e.source, e.dest, MAX_RATING - e.weight, false);
       } else {
         continue;
       }

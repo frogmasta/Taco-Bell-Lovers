@@ -8,6 +8,7 @@
 #include <queue>
 #include <set>
 #include <stack>
+#include <limits>
 
 class Djikstra {
  public:
@@ -18,7 +19,7 @@ class Djikstra {
   void printCurrPath() const;
 
  private:
-  int maxiTrust(const std::vector<int>& vset) const;
+  int miniTrust(const std::vector<int>& vset) const;
   static std::vector<int> neighborsInVset(int v, const std::vector<int> &vset, const Graph& graph) ;
   Graph reconstructGraph(int v) const;
   void traceBackPath() const;

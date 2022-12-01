@@ -67,6 +67,7 @@ vector<Edge> Parser::readFile(const string& fname) {
             }
             else edge.back() += c;
         }
+        trim(edge.back()); // necessary to trim the final edge piece
 
         // Invalid values
         if (edge.size() < 3 || !isInteger(edge[0]) || !isInteger(edge[1]) || !isInteger(edge[2])) continue;
