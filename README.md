@@ -74,6 +74,8 @@ Details on how to run all of them are outlined below. If an input csv is not pro
   * Project configuration files (e.x. README.md, CMakeLists.txt, etc.)
 * ### ```\data```
   * Contains all the input files. For example our bitcoin dataset and test case datasets. Also has some PNGs that demonstrate SCC working properly.
+* ### ```\documentation```
+  * Development Logs, Team Contract, Project Proposal, Final Report, and Final Presentation Link
 * ### ```\entry```
   * Driver file for the entire project. Runs the algorithms specified by the user in ```main.cpp```.
 * ### ```\src```
