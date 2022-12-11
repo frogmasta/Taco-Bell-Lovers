@@ -1,4 +1,3 @@
-/*
 #include <catch2/catch_test_macros.hpp>
 
 #include "graph.cpp"
@@ -7,8 +6,7 @@
 using std::string;
 using std::vector;
 
-*/
-/* Tests base functionality, no edge weights, no incorrect inputs *//*
+/* Tests base functionality, no edge weights, no incorrect inputs */
 
 TEST_CASE("simpleGraph1", "[weight=10]") {
     string infile = "../data/bfs.csv";
@@ -48,8 +46,7 @@ TEST_CASE("simpleGraph1", "[weight=10]") {
     delete g;
 }
 
-*/
-/* Tests graph parsing, handling incorrect inputs, AND edge compression! *//*
+/* Tests graph parsing, handling incorrect inputs, AND edge compression! */
 
 TEST_CASE("hardGraph1", "[weight=10]") {
     string infile = "../data/test1.csv";
@@ -87,4 +84,4 @@ TEST_CASE("hardGraph1", "[weight=10]") {
     REQUIRE((edge7 != adj5.end() && edge7->strong_equality(Edge(5, 3, 7))));
 
     delete g;
-}*/
+}
