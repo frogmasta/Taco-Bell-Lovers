@@ -8,7 +8,7 @@ using std::vector;
 
 /* Tests base functionality, no edge weights, no incorrect inputs */
 
-TEST_CASE("simpleGraph1", "[weight=10]") {
+TEST_CASE("simpleGraph1", "[weight=10][parse]") {
     string infile = "../data/bfs.csv";
     Graph* g = Parser::generateGraph(infile, true);
 
@@ -48,7 +48,7 @@ TEST_CASE("simpleGraph1", "[weight=10]") {
 
 /* Tests graph parsing, handling incorrect inputs, AND edge compression! */
 
-TEST_CASE("hardGraph1", "[weight=10]") {
+TEST_CASE("hardGraph1", "[weight=10][parse]") {
     string infile = "../data/test1.csv";
     Graph* g = Parser::generateGraph(infile, true);
 

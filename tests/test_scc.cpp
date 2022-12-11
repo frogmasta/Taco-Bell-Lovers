@@ -6,7 +6,7 @@
 using namespace std;
 
 /* Simple example with three connected components (also tests .csv files with spaces!) */
-TEST_CASE("scc_simple1", "[weight=10]") {
+TEST_CASE("scc_simple1", "[weight=10][scc]") {
     string infile = "../data/scc_1.csv";
     Graph* g = Parser::generateGraph(infile, true);
 
@@ -28,7 +28,7 @@ TEST_CASE("scc_simple1", "[weight=10]") {
 }
 
 /* Another simple example with three connected components */
-TEST_CASE("scc_simple2", "[weight=10]") {
+TEST_CASE("scc_simple2", "[weight=10][scc]") {
     string infile = "../data/scc_2.csv";
     Graph* g = Parser::generateGraph(infile, true);
 
@@ -50,7 +50,7 @@ TEST_CASE("scc_simple2", "[weight=10]") {
 }
 
 /* Running scc on a graph produced for another test case */
-TEST_CASE("scc_hard1", "[weight=10]") {
+TEST_CASE("scc_hard1", "[weight=10][scc]") {
     string infile = "../data/bfs.csv";
     Graph* g = Parser::generateGraph(infile, true);
 
