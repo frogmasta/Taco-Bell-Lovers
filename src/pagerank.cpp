@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <cmath>
+#include <utility>
 
 using namespace std;
 
@@ -7,36 +8,34 @@ unordered_map<int, double> Graph::PageRank() const
 {
     // stores PageRank of each vertex in the graph
     vector<int> verts = getVertices();
-    vector<double> ranks(getVertices().size(), 1/ (double) getVertices().size());
-    vector<double> previous;
+    unordered_map<int, double> ranks;
+
+    for(int i = 0; i < (int) verts.size(); i++)
+    {
+        ranks.insert(make_pair(verts[i], 1 / (double) verts.size()));
+    }
 
     int n = 0;
 
     // runs through 100 iterations to bring each PageRank to equilibrium
-    while(n < 100)
+    while(n < 1)
     {
-        previous = ranks;
-        for(int i = 0; i < (int) ranks.size(); i++)
+        unordered_map<int, double> previous;
+        previous.insert(ranks.begin(), ranks.end());
+        for(pair p : ranks)
         {
-            ranks[i] = PageRankHelper(verts[i], previous);
+            ranks.at(p.first) = PageRankHelper(p.first, previous);
         }
 
         n++;
     }
 
-    unordered_map<int, double> mappedRanks;
-
-    for(int i = 0; i < (int) ranks.size(); i++)
-    {
-        mappedRanks.insert(make_pair(verts[i], ranks[i]));
-    }
-
     // returns unordered map containing PageRank of each vertex corresponding to its index
-    return mappedRanks;
+    return ranks;
 }
 
 // helper function to calculate PageRank for each vertex in the graph
-double Graph::PageRankHelper(int v, const vector<double>& prev) const
+double Graph::PageRankHelper(int v, const unordered_map<int, double>& prev) const
 {
 
     vector<int> vertices = getVertices();
@@ -61,7 +60,7 @@ double Graph::PageRankHelper(int v, const vector<double>& prev) const
 
     for(int i = 0; i < (int) sourceVertices.size(); i++)
     {
-        rank += prev[sourceVertices[i]] / (double) numEdges[i];
+        rank += prev.at(sourceVertices[i]) / (double) numEdges[i];
     }
 
     return rank;
