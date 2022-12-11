@@ -80,6 +80,7 @@ vector<Edge> Parser::readFile(const string& fname) {
         out.push_back(newEdge);
     }
 
+    infile.close();
     return out;
 }
 
