@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <unordered_map>
@@ -18,14 +19,13 @@ void runDijkstra(Graph* g, int startingNode, int endingNode) {
     try {
         djikstra.findPath(startingNode, endingNode);
         std::vector<int> path = djikstra.getCurrPath();
-        std::cout << std::endl;
-        std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
-        std::cout << std::endl;
-        djikstra.printCurrPath();
+        djikstra.printCurrPath("dijkstra_out.txt");
     } catch(const std::invalid_argument& ia) {
         std::cout << "Path listed doesn't exist in the graph." << std::endl;
         return;
     }
+
+    std::cout << "Results of Dijkstra's have been written to \"dijkstra_out.txt\"" << std::endl;
 }
 
 /**
@@ -33,13 +33,25 @@ void runDijkstra(Graph* g, int startingNode, int endingNode) {
  */
 void runSCC(Graph* g, int cutoffWeight) {
     std::vector<std::vector<int>> scc = g->StronglyConnectedComponents(cutoffWeight);
+    std::ofstream outfile("scc_out.txt");
+
+    size_t i = 0;
+    outfile << "List of connected components of size greater than 1 (size 1 components are trivial)" << std::endl;
     for (const std::vector<int>& component : scc) {
-        std::cout << "Component: ";
+        if (component.size() < 2) continue;
+
+        outfile << "Component: ";
+
         for (const int& node : component) {
-            std::cout << node << " ";
+            outfile << node << " ";
         }
-        std::cout << std::endl;
+
+        outfile << std::endl;
+        ++i;
     }
+
+    std::cout << "Results of SCC have been written to \"scc_out.txt\"" << std::endl;
+    outfile.close();
 }
 
 /**
@@ -47,17 +59,20 @@ void runSCC(Graph* g, int cutoffWeight) {
  */
 void runBFS(Graph* g, int startingNode) {
     std::vector<int> traversal = g->bfs(startingNode);
-
     if (traversal.empty()) {
         std::cout << "Either you provided an empty graph or the starting vertex was invalid." << std::endl;
         return;
     }
 
-    std::cout << "BFS Traversal: ";
+    std::ofstream outfile("bfs_out.txt");
+
+    outfile << "BFS Traversal: " << std::endl;
     for (const int& v : traversal) {
-        std::cout << v << " ";
+        outfile << v << std::endl;
     }
-    std::cout << std::endl;
+
+    std::cout << "Results of BFS have been written to \"bfs_out.txt\"" << std::endl;
+    outfile.close();
 }
 
 /**
