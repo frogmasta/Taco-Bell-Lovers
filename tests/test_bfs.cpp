@@ -33,3 +33,17 @@ TEST_CASE("simpleGraph2", "[weight=10][bfs]") {
 
     delete g;
 }
+
+/* Non-simple, unconnected graph */
+TEST_CASE("hardGraph", "[weight=10][bfs]") {
+    string infile = "../data/bfs.csv";
+    Graph* g = Parser::generateGraph(infile, true);
+
+    vector<int> path = g->bfs(1);
+    vector<int> correctPath =  {1, 4, 2, 7, 6, 5, 3, 11, 12, 10};
+
+    REQUIRE(path.size() == 10);
+    REQUIRE(path == correctPath);
+
+    delete g;
+}
