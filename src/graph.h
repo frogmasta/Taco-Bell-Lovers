@@ -35,6 +35,8 @@ class Graph {
 
         std::vector<std::vector<int>> StronglyConnectedComponents(int cutoffWeight=0) const;
 
+        std::unordered_map<int, double> PageRank() const;
+
         void printGraph() const;
     private:
         void bfs_helper(int v, std::vector<int>& traversal, std::unordered_map<int, bool>& labeling) const;
@@ -42,6 +44,8 @@ class Graph {
         Graph* transpose() const;
         Graph* removeEdges(int cutoffWeight) const;
         std::vector<int> scc_dfs(int currVertex, std::unordered_map<int, bool>& visited, std::stack<int>& scc_stack) const;
+
+        double PageRankHelper(int v, const std::vector<double>& prev) const;
 
         std::unordered_map<int, std::vector<Edge>> adjList;
         bool edge_aggregated {false};
