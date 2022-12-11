@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 set(assignment_name "final-project") # Name of the assignment
 set(assignment_version 1.2022.12.0) # Version, where minor=semester_year, patch=semester_end_month, tweak=revision
 set(assignment_entrypoints "main") # Entrypoints to run the program
-set(assignment_clean_rm "tmp.png") # Generated files that should be removed with "make clean"
+# set(assignment_clean_rm "tmp.png") Change if necessary to remove output files.
 set(assignment_container "fa22") # Container we are targetting
 
 # Add color support to our messages.
@@ -116,13 +116,9 @@ else()
 endif()
 
 # Path definitions.
-set(lib_dir ${CMAKE_SOURCE_DIR}/lib)
 set(src_dir ${CMAKE_SOURCE_DIR}/src)
 set(tests_dir ${CMAKE_SOURCE_DIR}/tests)
 set(entry_dir ${CMAKE_SOURCE_DIR}/entry)
-
-# Run CMakeLists in lib_dir to build our required libraries.
-add_subdirectory(${lib_dir})
 
 # Run CMakeLists in src_dir to build the student's code.
 add_subdirectory(${src_dir})
@@ -133,12 +129,12 @@ file(GLOB_RECURSE tests_src CONFIGURE_DEPENDS ${tests_dir}/*.cpp)
 include(Catch)
 
 add_executable(test ${tests_src})
-target_link_libraries(test PRIVATE Catch2::Catch2WithMain libs src)
+target_link_libraries(test PRIVATE Catch2::Catch2WithMain src)
 
 catch_discover_tests(test)
 
 # Add the assignment entrypoints using our libs and src code.
 foreach(entrypoint IN LISTS assignment_entrypoints)
     add_executable(${entrypoint} ${entry_dir}/${entrypoint}.cpp)
-    target_link_libraries(${entrypoint} PRIVATE libs src)
+    target_link_libraries(${entrypoint} PRIVATE src)
 endforeach()
