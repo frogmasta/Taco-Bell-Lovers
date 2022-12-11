@@ -56,9 +56,9 @@ In our final project, there are 4 key algorithms/methods that you can run on dat
 Details on how to run all of them are outlined below. If [input.csv] is not provided, it defaults to our Bitcoin dataset.
 ```bash 
 ./main                                                              # Executes every algorithm in the suite
-./main bfs [input.csv]                                              # Runs bfs
-./main dijkstra [input.csv]                                         # Runs dijkstra's
-./main scc [input.csv]                                              # Runs Strongly Connected Components
+./main bfs [starting node] [input.csv]                              # Runs bfs
+./main dijkstra [starting node] [ending node] [input.csv]           # Runs dijkstra's
+./main scc [cutoffWeight] [input.csv]                               # Runs Strongly Connected Components
 ./main pagerank [input.csv]                                         # Runs PageRank
 ```
 
