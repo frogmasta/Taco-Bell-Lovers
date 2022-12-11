@@ -45,7 +45,7 @@ class Graph {
         Graph* removeEdges(int cutoffWeight) const;
         std::vector<int> scc_dfs(int currVertex, std::unordered_map<int, bool>& visited, std::stack<int>& scc_stack) const;
 
-        double PageRankHelper(int v, const std::vector<double>& prev) const;
+        double PageRankHelper(int v, const std::unordered_map<int, double>& prev) const;
 
         std::unordered_map<int, std::vector<Edge>> adjList;
         bool edge_aggregated {false};
