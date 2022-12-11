@@ -58,7 +58,7 @@ Details on how to run all of them are outlined below. If [input.csv] is not prov
 ./main                                                              # Executes every algorithm in the suite
 ./main bfs [starting node] [input.csv]                              # Runs bfs
 ./main dijkstra [starting node] [ending node] [input.csv]           # Runs dijkstra's
-./main scc [input.csv]                                              # Runs Strongly Connected Components
+./main scc [cutoffWeight] [input.csv]                               # Runs Strongly Connected Components
 ./main pagerank [input.csv]                                         # Runs PageRank
 ```
 
