@@ -33,13 +33,14 @@ class Graph {
 
         std::vector<int> bfs(int v) const;
 
-        std::vector<std::vector<int>> StronglyConnectedComponents() const;
+        std::vector<std::vector<int>> StronglyConnectedComponents(int cutoffWeight=0) const;
 
         void printGraph() const;
     private:
         void bfs_helper(int v, std::vector<int>& traversal, std::unordered_map<int, bool>& labeling) const;
 
         Graph* transpose() const;
+        Graph* removeEdges(int cutoffWeight) const;
         std::vector<int> scc_dfs(int currVertex, std::unordered_map<int, bool>& visited, std::stack<int>& scc_stack) const;
 
         std::unordered_map<int, std::vector<Edge>> adjList;

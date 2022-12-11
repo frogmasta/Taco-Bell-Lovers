@@ -3,14 +3,16 @@
 using namespace std;
 
 /**
- * Generates a list of strongly connected components
+ * Generates a list of strongly connected components.
  *
  * @param node to start the algorithm on
  * @return vector of strongly connected components
  */
-vector<vector<int>> Graph::StronglyConnectedComponents() const {
+vector<vector<int>> Graph::StronglyConnectedComponents(int cutoffWeight) const {
     vector<int> vertices = getVertices();
     if (vertices.empty()) return {};
+
+    Graph* filteredGraph = removeEdges(cutoffWeight); // Magic number for now, means we ignore edges with trust less than 0
 
     /* Step 1: DFS Traversal to populate scc_stack */
     stack<int> scc_stack;
@@ -20,7 +22,7 @@ vector<vector<int>> Graph::StronglyConnectedComponents() const {
         visited.insert({v, false});
     }
 
-    Graph* reversed = transpose();
+    Graph* reversed = filteredGraph->transpose();
     
     for (const int& v : vertices) {
         if (!visited.at(v)) {
@@ -40,21 +42,47 @@ vector<vector<int>> Graph::StronglyConnectedComponents() const {
         scc_stack.pop();
         if (!visited.at(currVertex)) {
             visited.at(currVertex) = true;
-            strongly_connected_components.push_back(scc_dfs(currVertex, visited, scc_stack));
+            strongly_connected_components.push_back(filteredGraph->scc_dfs(currVertex, visited, scc_stack));
         }
     }
 
+    delete filteredGraph;
     delete reversed;
     return strongly_connected_components;
 }
 
 /**
- * Provides a transposed version of the graph (i.e. reversing the edge direction)
+ * Generates a graph where edges with a weight below the input are discarded
+ *
+ * @return graph with edges removed.
+ */
+Graph* Graph::removeEdges(int cutoffWeight) const {
+    Graph* newGraph = new Graph();
+
+    for (const int& v : getVertices()) {
+        newGraph->addVertex(v); // Don't remove. Some vertices maybe have no edges.
+    }
+
+    for (const int& v : getVertices()) {
+        for (const Edge& e : getEdges(v)) {
+            if (e.weight >= cutoffWeight) newGraph->addEdge(e.source, e.dest, e.weight, true);
+        }
+    }
+
+    return newGraph;
+}
+
+/**
+ * Generates a transposed version of the graph (i.e. reversing the edge direction)
  *
  * @return transposed graph
  */
 Graph* Graph::transpose() const {
     Graph* newGraph = new Graph();
+
+    for (const int& v : getVertices()) {
+        newGraph->addVertex(v); // Don't remove. Some vertices maybe have no edges.
+    }
 
     for (const int& v : getVertices()) {
         for (const Edge& e : getEdges(v)) {
