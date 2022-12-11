@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
 
@@ -59,6 +61,23 @@ void runBFS(Graph* g, int startingNode) {
 }
 
 /**
+ * Runs PageRank algorithm and produces an output.
+ */
+void runPagerank(Graph* g) {
+    std::unordered_map<int, double> weights = g->PageRank();
+
+    if (weights.empty()) {
+        std::cout << "You have provided an empty graph or something else has occured." << std::endl;
+        return;
+    }
+
+    std::cout << "PageRank: " << std::endl;
+    for (const std::pair<int, double> p : weights) {
+        std::cout << p.first << ": " << p.second << "%" << std::endl;
+    }
+}
+
+/**
  * Driver file for the final project. Takes a command line input to which file to analyze. Defaults to bitcoin dataset.
  */
 int main(int argc, char **argv) {
@@ -108,8 +127,7 @@ int main(int argc, char **argv) {
     }
 
     else if (algorithm == "pagerank") {
-        std::cout << "PageRank isn't implemented yet. STAY TUNED!" << std::endl;
-        return 0;
+        if (argc > 2) dataset = argv[2];
     }
 
     std::string fname = "../data/" + dataset;
@@ -135,13 +153,14 @@ int main(int argc, char **argv) {
     }
 
     else if (algorithm == "pagerank") {
-        /* do nothing */
+        runPagerank(g);
     }
 
     else {
         runDijkstra(g, 1, 5098);
         runSCC(g, 8);
         runBFS(g, 1);
+        runPagerank(g);
     }
 
     delete g;
