@@ -87,6 +87,19 @@ void Djikstra::printCurrPath() const {
 }
 
 /**
+ * Prints out the nodes in the strongest trust path to the specified file
+ */
+void Djikstra::printCurrPath(string fname) const {
+  ofstream outfile(fname, ios::out);
+  outfile << "Path trust length: " << getPathDist() << std::endl << std::endl;
+  outfile << "Djikstra's path from vertex " << currPath.at(0) << " to vertex " << currPath.at(currPath.size()-1) << "." << endl;
+  for (unsigned long i = 0; i < currPath.size(); i++) {
+    outfile << "Node " << i << ": " << currPath.at(i) << endl;
+  }
+  outfile.close();
+}
+
+/**
  * Returns the vertex number of the minimum (in reality the maximum) trust distance vertex in a given vertex set
  *
  * @param vset vertex vector to be examined

@@ -9,6 +9,7 @@
 #include <set>
 #include <stack>
 #include <limits>
+#include <fstream>
 
 class Djikstra {
  public:
@@ -16,6 +17,7 @@ class Djikstra {
   void findPath(int src, int dest);
   double getPathDist() const {return currPathLength;};
   std::vector<int> getCurrPath() const {return currPath;};
+  void printCurrPath(std::string fname) const;
   void printCurrPath() const;
 
  private:
