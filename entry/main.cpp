@@ -1,5 +1,7 @@
 #include <iostream>
+#include <string>
 #include <vector>
+
 
 #include "parse.h"
 #include "graph.h"
@@ -7,14 +9,111 @@
 #include "djikstra.h"
 
 /**
+ * Runs Dijkstra's algorithm and produces an output.
+ */
+void runDijkstra(Graph* g, int startingNode, int endingNode) {
+    Djikstra djikstra(g);
+    try {
+        djikstra.findPath(startingNode, endingNode);
+        std::vector<int> path = djikstra.getCurrPath();
+        std::cout << std::endl;
+        std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
+        std::cout << std::endl;
+        djikstra.printCurrPath();
+    } catch(const std::invalid_argument& ia) {
+        std::cout << "Path listed doesn't exist in the graph." << std::endl;
+        return;
+    }
+}
+
+/**
+ * Runs Strongly Connected Components and produces an output.
+ */
+void runSCC(Graph* g, int cutoffWeight) {
+    std::vector<std::vector<int>> scc = g->StronglyConnectedComponents(cutoffWeight);
+    for (const std::vector<int>& component : scc) {
+        std::cout << "Component: ";
+        for (const int& node : component) {
+            std::cout << node << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+/**
+ * Runs BFS traversal and produces an output.
+ */
+void runBFS(Graph* g, int startingNode) {
+    std::vector<int> traversal = g->bfs(startingNode);
+
+    if (traversal.empty()) {
+        std::cout << "Either you provided an empty graph or the starting vertex was invalid." << std::endl;
+        return;
+    }
+
+    std::cout << "BFS Traversal: ";
+    for (const int& v : traversal) {
+        std::cout << v << " ";
+    }
+    std::cout << std::endl;
+}
+
+/**
  * Driver file for the final project. Takes a command line input to which file to analyze. Defaults to bitcoin dataset.
  */
 int main(int argc, char **argv) {
     std::string dataset = "soc-sign-bitcoinotc.csv";
-    if (argc > 1) dataset = argv[1];
+    std::string algorithm = "";
+
+    int startingNode, endingNode, cutoffWeight;
+
+    if (argc > 1) {
+        algorithm = argv[1];
+        if (algorithm != "dijkstra" && algorithm != "scc" && algorithm != "bfs" && algorithm != "pagerank") {
+            std::cout << "The algorithm you've specific is not valid. Only the following are accepted: dijkstra, scc, bfs, pagerank" << std::endl;
+            return 0;
+        }
+    }
+
+    if (algorithm == "dijkstra") {
+        if (argc < 4) {
+            std::cout << "Didn't specify starting and/or ending points." << std::endl;
+            return 0;
+        }
+
+        startingNode = std::stoi(argv[2]);
+        endingNode = std::stoi(argv[3]);
+
+        if (argc > 4) dataset = argv[4];
+    }
+
+    else if (algorithm == "scc") {
+        if (argc < 3) {
+            std::cout << "Didn't specify the cutoff weight for SCC. Cutoff weight should be between -10 and 10." << std::endl;
+            return 0;
+        }
+
+        cutoffWeight = std::stoi(argv[2]);
+        if (argc > 3) dataset = argv[3];
+    }
+
+    else if (algorithm == "bfs") {
+        if (argc < 3) {
+            std::cout << "Didn't specify the starting node to begin at." << std::endl;
+            return 0;
+        }
+
+        startingNode = std::stoi(argv[2]);
+        if (argc > 3) dataset = argv[3];
+    }
+
+    else if (algorithm == "pagerank") {
+        std::cout << "PageRank isn't implemented yet. STAY TUNED!" << std::endl;
+        return 0;
+    }
 
     std::string fname = "../data/" + dataset;
-    std::cout << "The input file is: " << fname << std::endl;
+    std::cout << "The specified input file is: " << fname << std::endl;
     Graph* g = Parser::generateGraph(fname, true);
 
     if (g == nullptr) {
@@ -23,29 +122,26 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    g->printGraph();
-
-    // strongly connected components
-    std::vector<std::vector<int>> scc = g->StronglyConnectedComponents();
-    for (const std::vector<int>& component : scc) {
-        std::cout << "Component: ";
-        for (const int& node : component) {
-            std::cout << node << " ";
-        }
-        std::cout << std::endl;
+    if (algorithm == "dijkstra") {
+        runDijkstra(g, startingNode, endingNode);
     }
 
-    // djikstra
-    Djikstra djikstra(g);
-    try {
-        djikstra.findPath(1, 5098);
-        std::vector<int> path = djikstra.getCurrPath();
-        std::cout << std::endl;
-        std::cout << "Path trust length: " << djikstra.getPathDist() << std::endl;
-        std::cout << std::endl;
-        djikstra.printCurrPath();
-    } catch(const std::invalid_argument& ia) {
-        std::cout << "Path listed doesn't exist in the graph." << std::endl;
+    else if (algorithm == "scc") {
+        runSCC(g, cutoffWeight);
+    }
+
+    else if (algorithm == "bfs") {
+        runBFS(g, startingNode);
+    }
+
+    else if (algorithm == "pagerank") {
+        /* do nothing */
+    }
+
+    else {
+        runDijkstra(g, 1, 5098);
+        runSCC(g, 8);
+        runBFS(g, 1);
     }
 
     delete g;
