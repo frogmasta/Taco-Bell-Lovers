@@ -65,3 +65,19 @@ TEST_CASE("BranchedGraphUni", "[weight=10][djikstra]") {
   REQUIRE(path == correctPath);
   REQUIRE(dist == correctDist);
 }
+
+TEST_CASE("CyclicGraph1", "[weight=10][djikstra]") {
+  string infile = "../data/djikstra/CyclicGraph1.csv";
+  Graph* g = Parser::generateGraph(infile, true);
+
+  Djikstra djikstra = Djikstra(g);
+  djikstra.findPath(1,3);
+  vector<int> path = djikstra.getCurrPath();
+  double dist = djikstra.getPathDist();
+
+  vector<int> correctPath{1,4,6,3};
+  double correctDist = 21;
+
+  REQUIRE(path == correctPath);
+  REQUIRE(dist == correctDist);
+}
