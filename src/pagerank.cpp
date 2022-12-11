@@ -3,11 +3,12 @@
 
 using namespace std;
 
-vector<float> Graph::PageRank() const
+unordered_map<int, double> Graph::PageRank() const
 {
     // stores PageRank of each vertex in the graph
-    vector<float> ranks(getVertices().size(), 1/ (float) getVertices().size());
-    vector<float> previous;
+    vector<int> verts = getVertices();
+    vector<double> ranks(getVertices().size(), 1/ (double) getVertices().size());
+    vector<double> previous;
 
     int n = 0;
 
@@ -17,18 +18,25 @@ vector<float> Graph::PageRank() const
         previous = ranks;
         for(int i = 0; i < (int) ranks.size(); i++)
         {
-            ranks[i] = PageRankHelper(i, previous);
+            ranks[i] = PageRankHelper(verts[i], previous);
         }
 
         n++;
     }
 
-    // returns vector containing PageRank of each vertex corresponding to its index
-    return ranks;
+    unordered_map<int, double> mappedRanks;
+
+    for(int i = 0; i < (int) ranks.size(); i++)
+    {
+        mappedRanks.insert(make_pair(verts[i], ranks[i]));
+    }
+
+    // returns unordered map containing PageRank of each vertex corresponding to its index
+    return mappedRanks;
 }
 
 // helper function to calculate PageRank for each vertex in the graph
-float Graph::PageRankHelper(int v, const vector<float>& prev) const
+double Graph::PageRankHelper(int v, const vector<double>& prev) const
 {
 
     vector<int> vertices = getVertices();
@@ -49,23 +57,12 @@ float Graph::PageRankHelper(int v, const vector<float>& prev) const
         }
     }
 
-    for(int i = 0; i < (int) numEdges.size(); i++)
-    {
-        cout << numEdges[i] << endl;
-    }
-
-    //cout << "siu" << endl;
-
-    float rank = 0; // stores final PageRank of vertex at the end of the iteration
+    double rank = 0; // stores final PageRank of vertex at the end of the iteration
 
     for(int i = 0; i < (int) sourceVertices.size(); i++)
     {
-        rank += prev[sourceVertices[i]] / (float) numEdges[i];
+        rank += prev[sourceVertices[i]] / (double) numEdges[i];
     }
-
-    //rank = floor(rank * 1000) / (float) 1000;
-
-    //cout << rank << endl;
 
     return rank;
 }
