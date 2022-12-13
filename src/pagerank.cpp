@@ -18,7 +18,7 @@ unordered_map<int, double> Graph::PageRank() const
     int n = 0;
 
     // runs through 100 iterations to bring each PageRank to equilibrium
-    while(n < 1)
+    while(n < 100)
     {
         unordered_map<int, double> previous;
         previous.insert(ranks.begin(), ranks.end());
