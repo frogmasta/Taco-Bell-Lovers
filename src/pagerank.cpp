@@ -17,12 +17,12 @@ unordered_map<int, double> Graph::PageRank() const
 
     int n = 0;
 
-    // runs through 100 iterations to bring each PageRank to equilibrium
+    // runs through 10 iterations to bring each PageRank to equilibrium
     while(n < 100)
     {
         unordered_map<int, double> previous;
         previous.insert(ranks.begin(), ranks.end());
-        for(pair p : ranks)
+        for(pair<int, double> p : ranks)
         {
             ranks.at(p.first) = PageRankHelper(p.first, previous);
         }
@@ -61,6 +61,13 @@ double Graph::PageRankHelper(int v, const unordered_map<int, double>& prev) cons
     for(int i = 0; i < (int) sourceVertices.size(); i++)
     {
         rank += prev.at(sourceVertices[i]) / (double) numEdges[i];
+    }
+
+    vector<Edge> outgoingEdges = getEdges(v);
+
+    if((int) outgoingEdges.size() == 0)
+    {
+        rank += prev.at(v);
     }
 
     return rank;
