@@ -68,6 +68,8 @@ Details on how to run all of them are outlined below. If an input csv is not pro
 
 ## Documentation & Results
 
+All of our documentation and results can be found in the ```\documentation``` folder. This includes our final video, final written report, dev logs, and team contract. 
+
 ## Project Structure
 
 * ### ```\```
