@@ -80,16 +80,30 @@ void runBFS(Graph* g, int startingNode) {
  */
 void runPagerank(Graph* g) {
     std::unordered_map<int, double> weights = g->PageRank();
-
     if (weights.empty()) {
         std::cout << "You have provided an empty graph or something else has occured." << std::endl;
         return;
     }
 
-    std::cout << "PageRank: " << std::endl;
+    std::ofstream outfile("pagerank_out.txt");
+
+    int maxPage = 0;
+    double maxRank = 0.0;
     for (const std::pair<int, double> p : weights) {
-        std::cout << p.first << ": " << p.second << "%" << std::endl;
+        if (p.second > maxRank) {
+            maxRank = p.second;
+            maxPage = p.first;
+        }
+    }   
+
+    outfile << maxPage << " had the highest ranking with rank " << maxRank << std::endl;
+    outfile << "PageRank - " << std::endl;
+    for (const std::pair<int, double> p : weights) {
+        outfile << p.first << ": " << p.second << "%" << std::endl;
     }
+
+    std::cout << "Results of PageRank have been written to \"pagerank_out.txt\"" << std::endl;
+    outfile.close();
 }
 
 /**
