@@ -1,7 +1,7 @@
 # ericcr2- azarcon3 - ojama2 - shiva4
 # Final Project 
 
-This is the repository for the Taco Bell Lovers team (Eric Roth, Robert Azarcon, Omeed Jamali, Shiva Malhotra). If you want to run the project on your own [computers](https://github.com/frogmasta/Taco-Bell-Lovers#Installation).
+This is the repository for the Taco Bell Lovers team (Eric Roth, Robert Azarcon, Omeed Jamali, Shiva Malhotra). The project was developed for our CS 225 Final Project at the University of Illinois at Urbana-Champaign.
 
 ## Installation
 
