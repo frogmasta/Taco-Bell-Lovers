@@ -51,7 +51,7 @@ make test
 ### Full-Output
 First run the following (again in your ```\build``` directory):
 ```bash
-make test
+make
 ```
 
 In our final project, there are 4 key algorithms/methods that you can run on datasets. These algorithms include: Breadth-First-Search (BFS), Dijkstra's, Strongly Connected Components (SCC), and PageRank. If you want to run your own dataset, put it in a .csv file format and put it in the data folder.
@@ -68,7 +68,7 @@ Details on how to run all of them are outlined below. If an input csv is not pro
 
 ## Documentation & Results
 
-All of our documentation and results can be found in the ```\documentation``` folder. This includes our final video, final written report, dev logs, and team contract.
+All of our documentation and results can be found in the ```\documentation``` folder. This includes our final written report, dev logs, and team contract.
 
 Our final project video can be found [here](https://www.wevideo.com/view/2896674497).
 
