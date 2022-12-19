@@ -12,7 +12,7 @@ vector<vector<int>> Graph::StronglyConnectedComponents(int cutoffWeight) const {
     vector<int> vertices = getVertices();
     if (vertices.empty()) return {};
 
-    Graph* filteredGraph = removeEdges(cutoffWeight); // Magic number for now, means we ignore edges with trust less than 0
+    Graph* filteredGraph = removeEdges(cutoffWeight);
 
     /* Step 1: DFS Traversal to populate scc_stack */
     stack<int> scc_stack;
